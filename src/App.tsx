@@ -3,9 +3,9 @@ import './index.css';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
+  // UploadOutlined,
   UserOutlined,
-  VideoCameraOutlined,
+  // VideoCameraOutlined,
   PieChartOutlined,
   DesktopOutlined,
   FileOutlined,
