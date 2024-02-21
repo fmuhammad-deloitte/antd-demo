@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './index.css';
 import {
   MenuFoldOutlined,
@@ -11,8 +11,9 @@ import {
   FileOutlined,
   TeamOutlined
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme } from 'antd';
+import { Layout, Menu, Button, theme, Table } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { useGetUserListQuery } from './query/services/usersService';
 // import { ItemType } from 'antd/es/menu/hooks/useItems';
 
 const { Header, Sider, Content } = Layout;
@@ -53,6 +54,42 @@ const App: React.FC = () => {
   }
 ]
 
+  const { data } = useGetUserListQuery({})
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Phone',
+      dataIndex: 'phone',
+      key: 'phone',
+    }
+
+  ]
+  
+  const tableData = useMemo(() => {
+    console.log('data >>', data)
+    return data?.map((item) => ({
+      key: item.id,
+      name: item.name,
+      username: item.username,
+      email: item.email,
+      phone: item.phone
+    }))
+  }, [data])
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -87,7 +124,10 @@ const App: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Hello
+          <Table 
+            dataSource={tableData}
+            columns={columns}
+          />
         </Content>
       </Layout>
     </Layout>
